@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CourierTrack | Smart Courier & Parcel Tracking</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+    <div class="nav-container">
+        <a href="/" class="logo">
+            <div class="logo-icon">📦</div>
+            <div class="logo-text">Courier<span>Track</span></div>
+        </a>
+
+        <nav class="nav-links">
+            <a href="/" class="active">Home</a>
+            <a href="/dashboard">Dashboard</a>
+            <a href="/track">Track Parcel</a>
+            <a href="/book" class="btn-book">+ Book Courier</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a href="/login" class="login-btn">Login</a>
+            <a href="/register" class="register-btn">Get Started</a>
+        </div>
+
+        <button class="menu-toggle" id="menuToggle">☰</button>
+    </div>
+</header>
+
+
+
+<!-- ================= HERO SECTION ================= -->
+
+<main>
+
+<section class="hero">
+
+    <div class="hero-container">
+
+
+        <!-- LEFT CONTENT -->
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+
+                <span class="badge-dot"></span>
+
+                Smart & Reliable Delivery
+
+            </div>
+
+
+            <h1>
+
+                Your parcel.
+
+                <span>Our priority.</span>
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                Track, manage and deliver your parcels
+                effortlessly with CourierTrack — your
+                smart courier management solution.
+
+            </p>
+
+
+            <!-- HERO BUTTONS -->
+
+            <div class="hero-buttons">
+
+                <a href="/register" class="primary-btn">
+
+                    Start Shipping
+
+                    <span>→</span>
+
+                </a>
+
+
+                <a href="#tracking" class="secondary-btn">
+
+                    Track a Parcel
+
+                    <span>⌖</span>
+
+                </a>
+
+            </div>
+
+
+            <!-- TRUST -->
+
+            <div class="hero-trust">
+
+                <div class="avatars">
+
+                    <span>👩🏻</span>
+                    <span>👨🏻</span>
+                    <span>👩🏽</span>
+                    <span>👨🏾</span>
+
+                </div>
+
+                <div>
+
+                    <strong>10K+</strong>
+
+                    <small>
+                        Happy customers
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- RIGHT DELIVERY CARD -->
+
+        <div class="hero-visual">
+
+            <div class="floating-card card-top">
+
+                <div class="floating-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <strong>Delivered</strong>
+
+                    <small>
+                        Just now
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="delivery-card">
+
+                <div class="delivery-glow"></div>
+
+                <div class="delivery-header">
+
+                    <span>
+                        LIVE DELIVERY
+                    </span>
+
+                    <span class="live-dot">
+                        ●
+                    </span>
+
+                </div>
+
+
+                <!-- PACKAGE -->
+
+                <div class="package-box">
+
+                    <div class="package-icon">
+                        📦
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            CRX-A7F82B91
+                        </strong>
+
+                        <small>
+                            Express Delivery
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ROUTE -->
+
+                <div class="route">
+
+                    <div class="route-point">
+
+                        <div class="point start"></div>
+
+                        <div>
+
+                            <strong>
+                                Chennai
+                            </strong>
+
+                            <small>
+                                Package picked up
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="route-line">
+
+                        <div class="moving-dot"></div>
+
+                    </div>
+
+
+                    <div class="route-point">
+
+                        <div class="point end"></div>
+
+                        <div>
+
+                            <strong>
+                                Bengaluru
+                            </strong>
+
+                            <small>
+                                Estimated arrival
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PROGRESS -->
+
+                <div class="delivery-progress">
+
+                    <div class="progress-info">
+
+                        <span>
+                            Delivery progress
+                        </span>
+
+                        <strong>
+                            78%
+                        </strong>
+
+                    </div>
+
+                    <div class="progress-bar">
+
+                        <div class="progress-fill"></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="delivery-footer">
+
+                    <span>
+                        🚚 In Transit
+                    </span>
+
+                    <strong>
+                        Tomorrow
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="floating-card card-bottom">
+
+                <div class="floating-icon orange">
+                    ⚡
+                </div>
+
+                <div>
+
+                    <strong>
+                        Fast Delivery
+                    </strong>
+
+                    <small>
+                        Express service
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= TRACKING SECTION ================= -->
+
+<section class="tracking-section" id="tracking">
+
+    <div class="tracking-container">
+
+        <div class="tracking-heading">
+
+            <span class="section-label">
+                TRACK YOUR PARCEL
+            </span>
+
+            <h2>
+                Where's your package?
+            </h2>
+
+            <p>
+                Enter your tracking ID and get
+                real-time delivery updates.
+            </p>
+
+        </div>
+
+
+        <form class="tracking-form"
+              action="/track"
+              method="get">
+
+            <div class="tracking-input">
+
+                <span>⌖</span>
+
+                <input
+                    type="text"
+                    name="trackingId"
+                    placeholder="Enter tracking ID e.g. CRX-A7F82B91"
+                    required>
+
+            </div>
+
+            <button type="submit">
+                Track Parcel →
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= SERVICES ================= -->
+
+<section class="services-section" id="services">
+
+    <div class="section-container">
+
+        <div class="section-heading">
+
+            <span class="section-label">
+                OUR SERVICES
+            </span>
+
+            <h2>
+                Everything you need
+                <span>to ship smarter.</span>
+            </h2>
+
+            <p>
+                Simple, reliable and transparent courier
+                services designed around you.
+            </p>
+
+        </div>
+
+
+        <div class="service-grid">
+
+
+            <!-- CARD 1 -->
+
+            <div class="service-card">
+
+                <div class="service-icon purple">
+                    📦
+                </div>
+
+                <h3>
+                    Easy Booking
+                </h3>
+
+                <p>
+                    Book your courier in just a few
+                    clicks with our simple booking system.
+                </p>
+
+                <a href="/book">
+                    Book a Parcel →
+                </a>
+
+            </div>
+
+
+            <!-- CARD 2 -->
+
+            <div class="service-card featured">
+
+                <div class="service-icon orange">
+                    📍
+                </div>
+
+                <h3>
+                    Real-Time Tracking
+                </h3>
+
+                <p>
+                    Know exactly where your parcel is
+                    with live tracking updates.
+                </p>
+
+                <a href="#tracking">
+                    Track Now →
+                </a>
+
+            </div>
+
+
+            <!-- CARD 3 -->
+
+            <div class="service-card">
+
+                <div class="service-icon green">
+                    🚚
+                </div>
+
+                <h3>
+                    Fast Delivery
+                </h3>
+
+                <p>
+                    Reliable delivery options designed
+                    to get your parcels there safely.
+                </p>
+
+                <a href="/register">
+                    Get Started →
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= ABOUT ================= -->
+
+<section class="about-section" id="about">
+
+    <div class="about-container">
+
+        <div class="about-content">
+
+            <span class="section-label">
+                WHY COURIERTRACK
+            </span>
+
+            <h2>
+                Shipping made
+                <span>simple.</span>
+            </h2>
+
+            <p>
+
+                CourierTrack brings everything together
+                in one easy-to-use platform. From booking
+                your parcel to watching it arrive at its
+                destination, we've got you covered.
+
+            </p>
+
+
+            <div class="about-points">
+
+                <div>
+                    <span>✓</span>
+                    Easy parcel booking
+                </div>
+
+                <div>
+                    <span>✓</span>
+                    Real-time tracking
+                </div>
+
+                <div>
+                    <span>✓</span>
+                    Secure customer accounts
+                </div>
+
+                <div>
+                    <span>✓</span>
+                    Reliable delivery management
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="about-stats">
+
+            <div class="stat-card">
+
+                <strong>
+                    10K+
+                </strong>
+
+                <span>
+                    Parcels Delivered
+                </span>
+
+            </div>
+
+            <div class="stat-card">
+
+                <strong>
+                    98%
+                </strong>
+
+                <span>
+                    On-Time Delivery
+                </span>
+
+            </div>
+
+            <div class="stat-card">
+
+                <strong>
+                    24/7
+                </strong>
+
+                <span>
+                    Tracking Support
+                </span>
+
+            </div>
+
+            <div class="stat-card">
+
+                <strong>
+                    50+
+                </strong>
+
+                <span>
+                    Delivery Locations
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= CTA ================= -->
+
+<section class="cta-section">
+
+    <div class="cta-container">
+
+        <div>
+
+            <span class="section-label">
+                READY TO SHIP?
+            </span>
+
+            <h2>
+                Let's get your parcel
+                <span>moving.</span>
+            </h2>
+
+        </div>
+
+        <a href="/register" class="cta-button">
+            Create Free Account →
+        </a>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer id="contact">
+
+    <div class="footer-container">
+
+        <div class="footer-brand">
+
+            <a href="/" class="logo">
+
+                <div class="logo-icon">
+                    🚚
+                </div>
+
+                <div class="logo-text">
+                    <span>Courier</span>Track
+                </div>
+
+            </a>
+
+            <p>
+                Smart courier management and
+                parcel tracking made simple.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <div>
+
+                <h4>
+                    Product
+                </h4>
+
+                <a href="#tracking">
+                    Track Parcel
+                </a>
+
+                <a href="/book">
+                    Book Parcel
+                </a>
+
+                <a href="/register">
+                    Register
+                </a>
+
+            </div>
+
+
+            <div>
+
+                <h4>
+                    Company
+                </h4>
+
+                <a href="#about">
+                    About Us
+                </a>
+
+                <a href="#contact">
+                    Contact
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 CourierTrack. All rights reserved.
+        </span>
+
+        <span>
+            Built with Java & Spring Boot
+        </span>
+
+    </div>
+
+</footer>
+
+
+</main>
+
+
+<!-- JavaScript -->
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

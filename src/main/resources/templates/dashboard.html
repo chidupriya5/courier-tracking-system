@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | CourierTrack</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">📦</div>
+                <div class="logo-text">Courier<span>Track</span></div>
+            </a>
+            <div class="nav-links">
+                <a th:href="@{/dashboard}" class="active">Dashboard</a>
+                <a th:href="@{/track}">Track Parcel</a>
+                <a th:href="@{/book}" class="btn-book">+ Book New Courier</a>
+                <a th:href="@{/login}" class="btn-outline">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-modern" style="max-width: 1140px; margin: 40px auto; padding: 0 24px;">
+        <div class="welcome-header">
+            <h1>Welcome Back!</h1>
+            <p>Manage your active shipments and review delivery activity.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Active Shipments</h3>
+                <p th:text="${activeShipmentsCount}">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Delivered Parcels</h3>
+                <p th:text="${deliveredCount}">0</p>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2 class="section-title">Recent Parcels</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tracking ID</th>
+                            <th>Destination</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="parcel : ${parcels}">
+                            <td><strong th:text="${parcel.trackingId}" style="color: var(--primary);">CRX-00000000</strong></td>
+                            <td th:text="${parcel.receiverAddress}">Destination Address</td>
+                            <td>
+                                <span th:text="${parcel.status}"
+                                    th:classappend="${parcel.status == 'DELIVERED'} ? 'badge-delivered' : 'badge-transit'"
+                                    class="badge-transit">STATUS</span>
+                            </td>
+                            <td>
+                                <a th:href="@{'/track?trackingId=' + ${parcel.trackingId}}"
+                                    class="btn-outline" style="padding: 6px 14px; font-size: 13px;">View Details</a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(parcels)}">
+                            <td colspan="4" style="text-align: center; color: var(--muted); padding: 30px;">
+                                No parcels booked yet. <a th:href="@{/book}" style="color: var(--primary); font-weight: 700;">Book your first parcel!</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Operations | CourierTrack</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/admin" class="logo">
+                <div class="logo-icon">🛡️</div>
+                <div class="logo-text">Courier<span>Track Admin</span></div>
+            </a>
+            <div class="nav-links">
+                <a th:href="@{/admin}" class="active">Shipments Control</a>
+                <a th:href="@{/dashboard}" class="btn-outline">Customer View</a>
+                <a th:href="@{/login}" class="btn-outline">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-modern" style="max-width: 1140px; margin: 40px auto; padding: 0 24px;">
+        <div class="welcome-header">
+            <h1>Shipment Operations Control</h1>
+            <p>Monitor customer parcels, update delivery milestones, and manage logistics statuses.</p>
+        </div>
+
+        <div class="section-card">
+            <h2 class="section-title">All Registered Shipments</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tracking ID</th>
+                            <th>Sender</th>
+                            <th>Receiver</th>
+                            <th>Current Status</th>
+                            <th>Update Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="parcel : ${parcels}">
+                            <td><strong th:text="${parcel.trackingId}" style="color: var(--primary);">CRX-000</strong>
+                            </td>
+                            <td th:text="${parcel.senderName}">Sender</td>
+                            <td th:text="${parcel.receiverName}">Receiver</td>
+                            <td>
+                                <span th:text="${parcel.status}"
+                                    th:classappend="${parcel.status == 'DELIVERED'} ? 'badge-delivered' : (${parcel.status == 'IN_TRANSIT'} ? 'badge-transit' : (${parcel.status == 'OUT_FOR_DELIVERY'} ? 'badge-out-for-delivery' : 'badge-booked'))"
+                                    class="badge-booked">STATUS</span>
+                            </td>
+                            <td>
+                                <form th:action="@{/admin/update-status}" method="post"
+                                    style="display: flex; gap: 10px; align-items: center;">
+                                    <input type="hidden" name="parcelId" th:value="${parcel.id}" />
+                                    <select name="status" class="form-select"
+                                        style="padding: 8px 12px; font-size: 13px; max-width: 180px;">
+                                        <option value="BOOKED" th:selected="${parcel.status == 'BOOKED'}">BOOKED
+                                        </option>
+                                        <option value="IN_TRANSIT" th:selected="${parcel.status == 'IN_TRANSIT'}">
+                                            IN_TRANSIT</option>
+                                        <option value="OUT_FOR_DELIVERY"
+                                            th:selected="${parcel.status == 'OUT_FOR_DELIVERY'}">OUT_FOR_DELIVERY
+                                        </option>
+                                        <option value="DELIVERED" th:selected="${parcel.status == 'DELIVERED'}">
+                                            DELIVERED</option>
+                                    </select>
+                                    <button type="submit" class="btn-update">Save</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(parcels)}">
+                            <td colspan="5" style="text-align: center; color: var(--muted); padding: 30px;">
+                                No shipments found in system database.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

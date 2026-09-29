@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | CourierTrack - Smart Shipping</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        :root {
+            --primary: #635bff;
+            --primary-dark: #5148e5;
+            --orange: #ff8a4c;
+            --green: #27c993;
+            --dark: #17172b;
+            --text: #414158;
+            --muted: #85859a;
+            --bg: #fafaff;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: 
+                radial-gradient(circle at 15% 15%, rgba(99, 91, 255, 0.14) 0%, transparent 42%),
+                radial-gradient(circle at 85% 85%, rgba(255, 138, 76, 0.16) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(39, 201, 147, 0.08) 0%, transparent 50%),
+                #fafaff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Floating Background Orbs */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            z-index: 0;
+            pointer-events: none;
+            animation: floatOrb 15s infinite ease-in-out alternate;
+        }
+
+        .bg-orb-1 {
+            width: 380px;
+            height: 380px;
+            top: -80px;
+            left: -80px;
+            background: rgba(99, 91, 255, 0.22);
+        }
+
+        .bg-orb-2 {
+            width: 420px;
+            height: 420px;
+            bottom: -100px;
+            right: -100px;
+            background: rgba(255, 138, 76, 0.20);
+            animation-delay: -7.5s;
+        }
+
+        .bg-orb-3 {
+            width: 280px;
+            height: 280px;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(39, 201, 147, 0.12);
+            animation-delay: -3s;
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(35px, -25px) scale(1.06); }
+            100% { transform: translate(-25px, 35px) scale(0.94); }
+        }
+
+        /* Top Navbar */
+        .register-navbar {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(236, 236, 244, 0.8);
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-badge {
+            width: 42px;
+            height: 42px;
+            border-radius: 13px;
+            background: linear-gradient(135deg, #635bff, #ff8a4c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 20px;
+            box-shadow: 0 8px 22px rgba(99, 91, 255, 0.3);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .logo-link:hover .logo-badge {
+            transform: rotate(12deg) scale(1.06);
+        }
+
+        .logo-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 22px;
+            color: var(--dark);
+            letter-spacing: -0.5px;
+        }
+
+        .logo-title span {
+            background: linear-gradient(135deg, #ff8a4c, #ff6b2b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(220, 224, 235, 0.9);
+            border-radius: 30px;
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+        }
+
+        .btn-back:hover {
+            background: #ffffff;
+            color: var(--primary);
+            border-color: rgba(99, 91, 255, 0.3);
+            transform: translateX(-3px);
+            box-shadow: 0 6px 20px rgba(99, 91, 255, 0.12);
+        }
+
+        /* Main Registration Container */
+        .register-wrapper {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+        }
+
+        .register-card {
+            width: 100%;
+            max-width: 580px;
+            background: rgba(255, 255, 255, 0.93);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 28px;
+            padding: 44px 40px;
+            box-shadow: 
+                0 30px 80px rgba(31, 31, 70, 0.10),
+                0 10px 30px rgba(99, 91, 255, 0.06);
+            animation: cardAppear 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes cardAppear {
+            from { opacity: 0; transform: translateY(24px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Card Header */
+        .card-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .header-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 16px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(99, 91, 255, 0.12), rgba(255, 138, 76, 0.15));
+            border: 1px solid rgba(99, 91, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 10px 25px rgba(99, 91, 255, 0.12);
+        }
+
+        .card-header h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--dark);
+            letter-spacing: -0.6px;
+            margin-bottom: 8px;
+        }
+
+        .card-header p {
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        /* Alerts */
+        .alert {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .alert-error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+        }
+
+        .alert-success {
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            color: #059669;
+        }
+
+        /* Form Controls */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            font-size: 16px;
+            color: var(--muted);
+            pointer-events: none;
+            transition: color 0.2s;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 16px 14px 44px;
+            border: 1.5px solid rgba(220, 224, 235, 0.9);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.9);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            color: var(--dark);
+            outline: none;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        textarea.form-input {
+            padding-top: 14px;
+            min-height: 85px;
+            resize: vertical;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(99, 91, 255, 0.15);
+        }
+
+        .form-input:focus ~ .input-icon {
+            color: var(--primary);
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #635bff 0%, #ff6b2b 100%);
+            color: #ffffff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px rgba(99, 91, 255, 0.28);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 32px rgba(99, 91, 255, 0.38);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-submit span.arrow {
+            transition: transform 0.2s;
+        }
+
+        .btn-submit:hover span.arrow {
+            transform: translateX(4px);
+        }
+
+        /* Footer & Badges */
+        .card-footer {
+            margin-top: 28px;
+            text-align: center;
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .login-highlight {
+            color: var(--primary);
+            font-weight: 700;
+            text-decoration: none;
+            margin-left: 4px;
+            transition: color 0.2s;
+        }
+
+        .login-highlight:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .features-row {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .feature-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(240, 242, 250, 0.7);
+            border: 1px solid rgba(220, 224, 235, 0.8);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--muted);
+        }
+
+        @media (max-width: 650px) {
+            .register-navbar {
+                padding: 16px 20px;
+            }
+
+            .register-card {
+                padding: 32px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+
+    <!-- Header Navbar -->
+    <header class="register-navbar">
+        <a href="/" class="logo-link">
+            <div class="logo-badge">📦</div>
+            <div class="logo-title">Courier<span>Track</span></div>
+        </a>
+        <a href="/" class="btn-back">
+            <span>←</span> Back Home
+        </a>
+    </header>
+
+    <!-- Main Registration Card -->
+    <main class="register-wrapper">
+        <div class="register-card">
+
+            <div class="card-header">
+                <div class="header-icon">🚀</div>
+                <h1>Create Account</h1>
+                <p>Join CourierTrack for instant parcel booking & live tracking</p>
+            </div>
+
+            <!-- Success Alert -->
+            <div th:if="${success}" class="alert alert-success">
+                <span>🎉</span>
+                <span th:text="${success}">Registration successful! You can now login.</span>
+            </div>
+
+            <!-- Error Alert -->
+            <div th:if="${error}" class="alert alert-error">
+                <span>⚠️</span>
+                <span th:text="${error}">An account with this email already exists.</span>
+            </div>
+
+            <!-- Registration Form -->
+            <form action="/register" method="post" id="registerForm">
+
+                <div class="form-grid">
+                    <!-- Full Name -->
+                    <div class="form-group">
+                        <label class="form-label" for="name">Full Name</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="name" name="name" class="form-input" placeholder="e.g. Alex Morgan" required>
+                            <span class="input-icon">👤</span>
+                        </div>
+                    </div>
+
+                    <!-- Email Address -->
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email Address</label>
+                        <div class="input-wrapper">
+                            <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" required>
+                            <span class="input-icon">✉️</span>
+                        </div>
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div class="form-group">
+                        <label class="form-label" for="phone">Phone Number</label>
+                        <div class="input-wrapper">
+                            <input type="tel" id="phone" name="phone" class="form-input" placeholder="+1 (555) 019-2834" required>
+                            <span class="input-icon">📞</span>
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="password" name="password" class="form-input" placeholder="Create a strong password" required>
+                            <span class="input-icon">🔒</span>
+                        </div>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="form-group full-width">
+                        <label class="form-label" for="address">Primary Address</label>
+                        <div class="input-wrapper">
+                            <textarea id="address" name="address" class="form-input" placeholder="Enter your full street address, city, and postal code" required></textarea>
+                            <span class="input-icon" style="top: 14px;">🏠</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-submit">
+                    <span>Create Account</span>
+                    <span class="arrow">→</span>
+                </button>
+
+            </form>
+
+            <div class="card-footer">
+                <span>Already have an account?</span>
+                <a href="/login" class="login-highlight">Log In</a>
+            </div>
+
+            <!-- Feature Chips -->
+            <div class="features-row">
+                <div class="feature-chip">
+                    <span>🔒</span> 256-Bit SSL Encrypted
+                </div>
+                <div class="feature-chip">
+                    <span>⚡</span> Instant Dispatch
+                </div>
+                <div class="feature-chip">
+                    <span>📦</span> Live Tracking
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+
+</html>

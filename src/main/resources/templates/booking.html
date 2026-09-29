@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Parcel | CourierX - Smart Shipping</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        :root {
+            --primary: #635bff;
+            --primary-dark: #5148e5;
+            --orange: #ff8a4c;
+            --green: #27c993;
+            --dark: #17172b;
+            --text: #414158;
+            --muted: #85859a;
+            --border: #ececf4;
+            --card-bg: rgba(255, 255, 255, 0.92);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(99, 91, 255, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 138, 76, 0.14) 0%, transparent 45%),
+                radial-gradient(circle at 50% 10%, rgba(39, 201, 147, 0.06) 0%, transparent 50%),
+                #fafaff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Ambient Glow Orbs */
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .bg-orb-1 { width: 400px; height: 400px; top: -100px; right: -100px; background: rgba(99, 91, 255, 0.18); }
+        .bg-orb-2 { width: 350px; height: 350px; bottom: -80px; left: -80px; background: rgba(255, 138, 76, 0.18); }
+
+        /* Navbar */
+        .booking-navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 50px;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(236, 236, 244, 0.8);
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-badge {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #635bff, #ff8a4c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 20px;
+            box-shadow: 0 8px 22px rgba(99, 91, 255, 0.3);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .logo-link:hover .logo-badge {
+            transform: rotate(12deg) scale(1.06);
+        }
+
+        .logo-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800;
+            font-size: 22px;
+            color: var(--dark);
+            letter-spacing: -0.5px;
+        }
+
+        .logo-title span {
+            background: linear-gradient(135deg, #ff8a4c, #ff6b2b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-link {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary);
+        }
+
+        .btn-dash {
+            padding: 9px 20px;
+            background: rgba(99, 91, 255, 0.08);
+            color: var(--primary);
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+
+        .btn-dash:hover {
+            background: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 6px 18px rgba(99, 91, 255, 0.25);
+        }
+
+        /* Page Layout */
+        .page-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1120px;
+            margin: 40px auto 60px;
+            padding: 0 24px;
+        }
+
+        .booking-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .booking-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(255, 138, 76, 0.12);
+            border: 1px solid rgba(255, 138, 76, 0.25);
+            border-radius: 30px;
+            color: #ea580c;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .booking-header h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 38px;
+            font-weight: 800;
+            color: var(--dark);
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .booking-header p {
+            color: var(--muted);
+            font-size: 16px;
+            max-width: 580px;
+            margin: 0 auto;
+        }
+
+        /* Main Grid: Form + Estimator Card */
+        .booking-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 32px;
+            align-items: start;
+        }
+
+        @media (max-width: 960px) {
+            .booking-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Card Container */
+        .form-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 28px;
+            padding: 40px;
+            box-shadow: 
+                0 30px 80px rgba(31, 31, 70, 0.08),
+                0 10px 30px rgba(99, 91, 255, 0.05);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 22px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed rgba(226, 232, 240, 0.8);
+        }
+
+        .section-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #635bff, #8a83ff);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 8px;
+            letter-spacing: 0.2px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            font-size: 17px;
+            color: #a0aec0;
+            pointer-events: none;
+            transition: color 0.2s;
+        }
+
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 14px 16px 14px 46px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.95);
+            font-size: 15px;
+            font-family: inherit;
+            color: var(--dark);
+            outline: none;
+            transition: all 0.25s ease;
+        }
+
+        .form-textarea {
+            padding-top: 14px;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            border-color: var(--primary);
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(99, 91, 255, 0.14);
+        }
+
+        .form-input:focus + .input-icon,
+        .input-wrapper:focus-within .input-icon {
+            color: var(--primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row { grid-template-columns: 1fr; }
+        }
+
+        /* Speed Choice Cards */
+        .speed-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .speed-options { grid-template-columns: 1fr; }
+        }
+
+        .speed-card {
+            border: 1.5px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 16px;
+            background: #ffffff;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: center;
+            position: relative;
+        }
+
+        .speed-card input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .speed-card:hover {
+            border-color: rgba(99, 91, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .speed-card.selected {
+            border-color: var(--primary);
+            background: rgba(99, 91, 255, 0.04);
+            box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.15);
+        }
+
+        .speed-icon {
+            font-size: 24px;
+            margin-bottom: 6px;
+        }
+
+        .speed-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .speed-time {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        .speed-price {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-top: 6px;
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #635bff 0%, #ff8a4c 100%);
+            color: #ffffff;
+            font-size: 17px;
+            font-weight: 800;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 12px 30px rgba(99, 91, 255, 0.35);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 16px 36px rgba(99, 91, 255, 0.45);
+        }
+
+        /* Estimator / Summary Card */
+        .summary-card {
+            position: sticky;
+            top: 100px;
+            background: var(--card-bg);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 28px;
+            padding: 32px;
+            box-shadow: 
+                0 30px 80px rgba(31, 31, 70, 0.08),
+                0 10px 30px rgba(99, 91, 255, 0.05);
+        }
+
+        .summary-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+            margin-bottom: 24px;
+        }
+
+        .summary-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .summary-badge {
+            padding: 4px 10px;
+            background: #edfcf5;
+            color: #059669;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .summary-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .summary-label {
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .summary-val {
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .total-box {
+            background: linear-gradient(135deg, rgba(99, 91, 255, 0.08), rgba(255, 138, 76, 0.12));
+            border: 1px solid rgba(99, 91, 255, 0.2);
+            border-radius: 18px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .total-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--muted);
+            margin-bottom: 4px;
+        }
+
+        .total-amount {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 34px;
+            font-weight: 800;
+            color: var(--dark);
+            letter-spacing: -0.5px;
+        }
+
+        .trust-banner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+
+    <!-- Navigation Header -->
+    <header class="booking-navbar">
+        <a href="/" class="logo-link">
+            <div class="logo-badge">📦</div>
+            <div class="logo-title">Courier<span>Track</span></div>
+        </a>
+
+        <nav class="nav-menu">
+            <a href="/dashboard" class="nav-link">Dashboard</a>
+            <a href="/track" class="nav-link">Track Parcel</a>
+            <a href="/book" class="nav-link active">Book Shipment</a>
+            <a href="/dashboard" class="btn-dash">My Account</a>
+        </nav>
+    </header>
+
+    <!-- Page Content -->
+    <div class="page-container">
+
+        <div class="booking-header">
+            <div class="booking-badge">📦 Instant Parcel Dispatch</div>
+            <h1>Schedule a New Shipment</h1>
+            <p>Fill out the parcel details below for instant pickup and door-to-door express delivery.</p>
+        </div>
+
+        <div class="booking-grid">
+
+            <!-- Main Booking Form -->
+            <div class="form-card">
+                <form th:action="@{/book}" th:object="${parcel}" action="/book" method="post" id="bookingForm">
+
+                    <!-- Section 1: Sender Information -->
+                    <div class="section-title">
+                        <div class="section-num">1</div>
+                        <span>Sender Information</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="senderName">Sender Full Name</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="senderName" th:field="*{senderName}" name="senderName" class="form-input" placeholder="e.g. Alex Morgan" required>
+                            <span class="input-icon">👤</span>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Recipient Details -->
+                    <div class="section-title" style="margin-top: 36px;">
+                        <div class="section-num" style="background: linear-gradient(135deg, #ff8a4c, #ff6b2b);">2</div>
+                        <span>Recipient & Delivery Address</span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="receiverName">Recipient Full Name</label>
+                            <div class="input-wrapper">
+                                <input type="text" id="receiverName" th:field="*{receiverName}" name="receiverName" class="form-input" placeholder="e.g. Sophia Bennett" required>
+                                <span class="input-icon">📍</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="receiverPhone">Recipient Phone Number</label>
+                            <div class="input-wrapper">
+                                <input type="tel" id="receiverPhone" th:field="*{receiverPhone}" name="receiverPhone" class="form-input" placeholder="+1 (555) 019-2834" required>
+                                <span class="input-icon">📞</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="receiverAddress">Complete Delivery Address</label>
+                        <div class="input-wrapper">
+                            <textarea id="receiverAddress" th:field="*{receiverAddress}" name="receiverAddress" class="form-textarea" placeholder="Street Address, Apartment/Suite, City, State, Zip Code" required></textarea>
+                            <span class="input-icon" style="top: 16px;">🏠</span>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Parcel Details -->
+                    <div class="section-title" style="margin-top: 36px;">
+                        <div class="section-num" style="background: linear-gradient(135deg, #27c993, #059669);">3</div>
+                        <span>Parcel Weight & Service Speed</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="weight">Package Weight (kg)</label>
+                        <div class="input-wrapper">
+                            <input type="number" step="0.1" min="0.1" max="100" id="weight" th:field="*{weight}" name="weight" class="form-input" placeholder="e.g. 2.5" required>
+                            <span class="input-icon">⚖️</span>
+                        </div>
+                    </div>
+
+                    <!-- Delivery Speed Selector -->
+                    <div class="form-group">
+                        <label class="form-label">Select Delivery Speed</label>
+                        <div class="speed-options">
+
+                            <label class="speed-card selected" id="speedStd">
+                                <input type="radio" name="speed" value="standard" checked onclick="updateEstimator('Standard', 3, 12)">
+                                <div class="speed-icon">🚛</div>
+                                <div class="speed-title">Standard</div>
+                                <div class="speed-time">3 - 5 Days</div>
+                                <div class="speed-price">$12.00</div>
+                            </label>
+
+                            <label class="speed-card" id="speedExp">
+                                <input type="radio" name="speed" value="express" onclick="updateEstimator('Express 24h', 1, 25)">
+                                <div class="speed-icon">⚡</div>
+                                <div class="speed-title">Express 24h</div>
+                                <div class="speed-time">1 - 2 Days</div>
+                                <div class="speed-price">$25.00</div>
+                            </label>
+
+                            <label class="speed-card" id="speedNight">
+                                <input type="radio" name="speed" value="overnight" onclick="updateEstimator('Overnight', 0.5, 45)">
+                                <div class="speed-icon">🚀</div>
+                                <div class="speed-title">Overnight</div>
+                                <div class="speed-time">Next Morning</div>
+                                <div class="speed-price">$45.00</div>
+                            </label>
+
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-submit">
+                        <span>Confirm & Book Shipment</span>
+                        <span style="font-size: 20px;">→</span>
+                    </button>
+
+                </form>
+            </div>
+
+            <!-- Estimator & Summary Sidebar -->
+            <div class="summary-card">
+                <div class="summary-header">
+                    <div class="summary-title">Fare Estimator</div>
+                    <div class="summary-badge">Live Estimate</div>
+                </div>
+
+                <ul class="summary-list">
+                    <li class="summary-item">
+                        <span class="summary-label">Service Speed:</span>
+                        <span class="summary-val" id="sumSpeed">Standard (3-5 days)</span>
+                    </li>
+                    <li class="summary-item">
+                        <span class="summary-label">Estimated Weight:</span>
+                        <span class="summary-val" id="sumWeight">1.0 kg</span>
+                    </li>
+                    <li class="summary-item">
+                        <span class="summary-label">Base Rate:</span>
+                        <span class="summary-val" id="sumBase">$12.00</span>
+                    </li>
+                    <li class="summary-item">
+                        <span class="summary-label">Insurance & Fuel:</span>
+                        <span class="summary-val" style="color: #059669;">FREE</span>
+                    </li>
+                </ul>
+
+                <div class="total-box">
+                    <div class="total-label">Estimated Total</div>
+                    <div class="total-amount" id="sumTotal">$15.00</div>
+                </div>
+
+                <div class="trust-banner">
+                    <span>🛡️</span> 100% Money-back Guarantee & Live GPS Tracking
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        // Interactive Speed Card Selector and Live Estimator
+        let currentBase = 12;
+        let currentSpeedName = 'Standard';
+
+        const weightInput = document.getElementById('weight');
+        const sumWeight = document.getElementById('sumWeight');
+        const sumSpeed = document.getElementById('sumSpeed');
+        const sumBase = document.getElementById('sumBase');
+        const sumTotal = document.getElementById('sumTotal');
+
+        function updateEstimator(speedName, days, baseCost) {
+            currentBase = baseCost;
+            currentSpeedName = speedName;
+
+            // Highlight selected card
+            document.querySelectorAll('.speed-card').forEach(card => card.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            let weightVal = parseFloat(weightInput.value);
+            if (isNaN(weightVal) || weightVal <= 0) {
+                weightVal = 1.0;
+            }
+
+            sumWeight.textContent = weightVal.toFixed(1) + ' kg';
+            sumSpeed.textContent = currentSpeedName;
+            sumBase.textContent = '$' + currentBase.toFixed(2);
+
+            // Total = Base + ($3.00 per kg over 1kg)
+            let extraWeightCost = Math.max(0, weightVal - 1) * 3.00;
+            let total = currentBase + extraWeightCost;
+
+            sumTotal.textContent = '$' + total.toFixed(2);
+        }
+
+        if (weightInput) {
+            weightInput.addEventListener('input', calculateTotal);
+        }
+    </script>
+</body>
+</html>

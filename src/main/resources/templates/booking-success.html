@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed | CourierTrack</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        :root {
+            --primary: #635bff;
+            --orange: #ff8a4c;
+            --green: #27c993;
+            --dark: #17172b;
+            --text: #414158;
+            --muted: #85859a;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(39, 201, 147, 0.15) 0%, transparent 45%),
+                radial-gradient(circle at 80% 80%, rgba(99, 91, 255, 0.15) 0%, transparent 45%),
+                #fafaff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+            color: var(--text);
+        }
+
+        .success-card {
+            width: 100%;
+            max-width: 520px;
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 28px;
+            padding: 48px 40px;
+            text-align: center;
+            box-shadow: 
+                0 30px 80px rgba(31, 31, 70, 0.08),
+                0 10px 30px rgba(39, 201, 147, 0.1);
+            animation: cardPop 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes cardPop {
+            from { opacity: 0; transform: scale(0.92) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #27c993 0%, #059669 100%);
+            color: #ffffff;
+            font-size: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 14px 32px rgba(39, 201, 147, 0.35);
+            animation: pulseGlow 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); box-shadow: 0 14px 32px rgba(39, 201, 147, 0.35); }
+            50% { transform: scale(1.06); box-shadow: 0 18px 40px rgba(39, 201, 147, 0.5); }
+        }
+
+        .success-card h1 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--dark);
+            letter-spacing: -0.8px;
+            margin-bottom: 10px;
+        }
+
+        .success-card p {
+            color: var(--muted);
+            font-size: 15px;
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+
+        .tracking-box {
+            background: linear-gradient(135deg, rgba(99, 91, 255, 0.06), rgba(255, 138, 76, 0.08));
+            border: 1.5px dashed rgba(99, 91, 255, 0.3);
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .tracking-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .tracking-id {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: 2px;
+        }
+
+        .btn-copy {
+            margin-top: 10px;
+            padding: 6px 14px;
+            background: #ffffff;
+            border: 1px solid rgba(99, 91, 255, 0.3);
+            border-radius: 20px;
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-copy:hover {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        .actions-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-primary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px;
+            background: linear-gradient(135deg, #635bff 0%, #5148e5 100%);
+            color: #ffffff;
+            border-radius: 14px;
+            font-weight: 700;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(99, 91, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 32px rgba(99, 91, 255, 0.4);
+        }
+
+        .btn-secondary {
+            padding: 14px;
+            background: rgba(240, 242, 245, 0.8);
+            color: var(--dark);
+            border-radius: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(230, 233, 238, 1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="success-card">
+        <div class="success-icon">✓</div>
+        <h1>Shipment Booked!</h1>
+        <p>Your parcel has been successfully registered in our system. You can track its live status anytime using the reference ID below.</p>
+
+        <div class="tracking-box">
+            <div class="tracking-label">Unique Tracking Reference</div>
+            <div class="tracking-id" id="trackingRef" th:text="${trackingId}">CRX-8A9B0C1D</div>
+            <button class="btn-copy" onclick="copyTrackingCode()">📋 Copy Tracking ID</button>
+        </div>
+
+        <div class="actions-group">
+            <a th:href="@{/track(trackingId=${trackingId})}" href="/track" class="btn-primary">
+                <span>Track This Parcel Now</span>
+                <span style="font-size: 18px;">→</span>
+            </a>
+            <a href="/dashboard" class="btn-secondary">Return to Dashboard</a>
+        </div>
+    </div>
+
+    <script>
+        function copyTrackingCode() {
+            const trackingText = document.getElementById('trackingRef').textContent;
+            navigator.clipboard.writeText(trackingText).then(() => {
+                const btn = document.querySelector('.btn-copy');
+                btn.textContent = '✅ Copied!';
+                setTimeout(() => { btn.textContent = '📋 Copy Tracking ID'; }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
